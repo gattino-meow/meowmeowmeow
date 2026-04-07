@@ -1,20 +1,24 @@
+          git config --local user.name "github-actions[bot]"
+          git add .
+          
+          # Esegue il commit solo se i file sono effettivamente cambiati
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update" && git push)
 name: Update
 
 on:
   schedule:
     # Esegue ogni 2 ore al minuto 30 (es. 00:30, 02:30, 04:30...)
-    # Garantisce il rinnovo prima della scadenza delle 3 ore.
     - cron: '30 */2 * * *'
   push:
     branches:
       - main
-  workflow_dispatch: # Permette di avviarlo manualmente dalla tab Actions
+  workflow_dispatch:
 
 jobs:
   update-links:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Permesso necessario per fare il push dei file aggiornati
+      contents: write
     
     steps:
       - name: Checkout repository
@@ -28,14 +32,19 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run update script
+      - name: Run update script (meow)
         run: python meow.py
+
+      - name: Run EPG script
+        run: python epg.py
 
       - name: Commit and push if changed
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          
+          # Aggiunge tutti i file modificati o generati
           git add .
           
-          # Esegue il commit solo se i file sono effettivamente cambiati
+          # Commit solo se ci sono modifiche
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update" && git push)

@@ -1,8 +1,3 @@
-          git config --local user.name "github-actions[bot]"
-          git add .
-          
-          # Esegue il commit solo se i file sono effettivamente cambiati
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update" && git push)
 name: Update
 
 on:
@@ -43,7 +38,6 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Aggiunge tutti i file modificati o generati
           git add .
           
           # Commit solo se ci sono modifiche

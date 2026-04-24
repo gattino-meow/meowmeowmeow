@@ -27,9 +27,6 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run update script (meow)
-        run: python meow.py
-
       - name: Run EPG script
         run: python epg.py
 
